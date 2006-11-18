@@ -29,7 +29,7 @@
 #
 
 
-.PHONY: all clean dvi pdf ps view
+.PHONY: all clean dvi pdf ps rtf view
 
 all: dvi
 
@@ -48,6 +48,8 @@ pdf: $(TEX_MAIN).pdf
 
 ps: $(TEX_MAIN).ps
 
+rtf: $(TEX_MAIN).rtf
+
 view: dvi
 	xdvi $(TEX_MAIN)
 
@@ -62,4 +64,7 @@ $(TEX_MAIN).pdf: $(TEX_MAIN).ps
 
 $(TEX_MAIN).ps: $(TEX_MAIN).dvi
 	dvips -Ppdf $(TEX_MAIN).dvi -o $(TEX_MAIN).ps
+
+$(TEX_MAIN).rtf: $(TEX_MAIN).tex
+	latex2rtf $(TEX_MAIN).tex
 
