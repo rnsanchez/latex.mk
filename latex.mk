@@ -53,7 +53,7 @@ rtf: $(TEX_MAIN).rtf
 view: dvi
 	xdvi $(TEX_MAIN)
 
-$(TEX_MAIN).dvi: $(TEX_SRC) $(BIB_SRC).bib
+$(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIB_SRC).bib
 	latex $(TEX_MAIN)
 	$(BIBCMD)
 	latex $(TEX_MAIN)
