@@ -38,10 +38,12 @@ clean:
 
 dvi: $(TEX_MAIN).dvi
 
-.if defined(WITH_BIBTEX)
-BIBCMD = bibtex $(TEX_MAIN)
+.if defined(BIB_SRC)
+BIBCMD = bibtex $(TEX_MAIN) && latex $(TEX_MAIN)
+BIBSRC = $(BIB_SRC).bib
 .else
 BIBCMD =
+BIBSRC =
 .endif
 
 pdf: $(TEX_MAIN).pdf
@@ -53,10 +55,9 @@ rtf: $(TEX_MAIN).rtf
 view: dvi
 	xdvi $(TEX_MAIN)
 
-$(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIB_SRC).bib
+$(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIBSRC)
 	latex $(TEX_MAIN)
 	$(BIBCMD)
-	latex $(TEX_MAIN)
 	latex $(TEX_MAIN)
 
 $(TEX_MAIN).pdf: $(TEX_MAIN).ps
