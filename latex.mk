@@ -29,7 +29,7 @@
 #
 
 
-.PHONY: all clean dvi pdf ps rtf view
+.PHONY: all clean dvi pdf ps rtf view viewpdf viewps
 
 all: dvi
 
@@ -46,6 +46,11 @@ BIBCMD =
 BIBSRC =
 .endif
 
+DVI_VIEWER ?=	xdvi
+PS_VIEWER ?=	gv
+PDF_VIEWER ?=	xpdf
+
+
 pdf: $(TEX_MAIN).pdf
 
 ps: $(TEX_MAIN).ps
@@ -53,7 +58,13 @@ ps: $(TEX_MAIN).ps
 rtf: $(TEX_MAIN).rtf
 
 view: dvi
-	xdvi $(TEX_MAIN)
+	$(DVI_VIEWER) $(TEX_MAIN)
+
+viewpdf: pdf
+	$(PDF_VIEWER) $(TEX_MAIN).pdf
+
+viewps: ps
+	$(PS_VIEWER) $(TEX_MAIN).ps
 
 $(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIBSRC)
 	latex $(TEX_MAIN)
