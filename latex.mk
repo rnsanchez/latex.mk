@@ -58,13 +58,13 @@ ps: $(TEX_MAIN).ps
 rtf: $(TEX_MAIN).rtf
 
 view: dvi
-	$(DVI_VIEWER) $(TEX_MAIN)
+	$(DVI_VIEWER) $(DVI_VIEWER_OPTS) $(TEX_MAIN)
 
 viewpdf: pdf
-	$(PDF_VIEWER) $(TEX_MAIN).pdf
+	$(PDF_VIEWER) $(PDF_VIEWER_OPTS) $(TEX_MAIN).pdf
 
 viewps: ps
-	$(PS_VIEWER) $(TEX_MAIN).ps
+	$(PS_VIEWER) $(PS_VIEWER_OPTS) $(TEX_MAIN).ps
 
 $(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIBSRC)
 	latex $(TEX_MAIN)
