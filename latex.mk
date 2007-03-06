@@ -34,7 +34,7 @@
 all: dvi
 
 clean:
-	rm -f *.aux *.toc *.lo[gft] *.bbl *.blg *.dvi *.out *.nav *.snm
+	rm -f *.aux *.toc *.lo[agft] *.bbl *.blg *.dvi *.out *.nav *.snm
 
 dvi: $(TEX_MAIN).dvi
 
