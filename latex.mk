@@ -1,10 +1,10 @@
 #
-# Copyright (c) 2006, Ricardo Nabinger Sanchez <rnsanchez@wait4.org>
+# Copyright (c) 2006, 2007  Ricardo Nabinger Sanchez <rnsanchez@wait4.org>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 #   * Redistributions of source code must retain the above copyright notice,
 #   this list of conditions and the following disclaimer.
 #   * Redistributions in binary form must reproduce the above copyright notice,
@@ -36,47 +36,78 @@ all: dvi
 clean:
 	rm -f *.aux *.toc *.lo[agft] *.bbl *.blg *.dvi *.out *.nav *.snm
 
-dvi: $(TEX_MAIN).dvi
-
+#
+# If the user has a BibTeX database, we must track its dependencies.
+#
 .if defined(BIB_SRC)
-BIBCMD = bibtex $(TEX_MAIN) && latex $(TEX_MAIN)
-BIBSRC = $(BIB_SRC).bib
+BBL	= ${TEX_MAIN:.tex=.bbl}
 .else
-BIBCMD =
-BIBSRC =
+BBL	=
 .endif
+
+#
+# Files we know about.
+#
+DVI	= ${TEX_MAIN:.tex=.dvi}
+PDF	= ${TEX_MAIN:.tex=.pdf}
+PS	= ${TEX_MAIN:.tex=.ps}
+RTF	= ${TEX_MAIN:.tex=.rtf}
 
 DVI_VIEWER ?=	xdvi
 PS_VIEWER ?=	gv
 PDF_VIEWER ?=	xpdf
 
 
-pdf: $(TEX_MAIN).pdf
+#
+# Rules to create the files we know about.
+#
+dvi: $(DVI)
 
-ps: $(TEX_MAIN).ps
+pdf: $(PDF)
 
-rtf: $(TEX_MAIN).rtf
+ps: $(PS)
 
+rtf: $(RTF)
+
+#
+# Visualization.
+#
 view: dvi
-	$(DVI_VIEWER) $(DVI_VIEWER_OPTS) $(TEX_MAIN)
+	$(DVI_VIEWER) $(DVI_VIEWER_OPTS) $(DVI)
 
 viewpdf: pdf
-	$(PDF_VIEWER) $(PDF_VIEWER_OPTS) $(TEX_MAIN).pdf
+	$(PDF_VIEWER) $(PDF_VIEWER_OPTS) $(PDF)
 
 viewps: ps
-	$(PS_VIEWER) $(PS_VIEWER_OPTS) $(TEX_MAIN).ps
+	$(PS_VIEWER) $(PS_VIEWER_OPTS) $(PS)
 
-$(TEX_MAIN).dvi: $(TEX_MAIN).tex $(TEX_SRC) $(BIBSRC)
+#
+# If using BibTeX, and the database changed, we need the full run.
+#
+$(BBL): $(BIB_SRC)
 	latex $(TEX_MAIN)
-	$(BIBCMD)
+	bibtex ${TEX_MAIN:.tex=}
+	latex $(TEX_MAIN)
 	latex $(TEX_MAIN)
 
-$(TEX_MAIN).pdf: $(TEX_MAIN).ps
-	ps2pdf $(TEX_MAIN).ps
+#
+# If not using BibTeX, 2 LaTeX runs are necessary to ensure correct labels.
+# Otherwise, make will instead go to the $(BBL) rule above, without running
+# the commands in this one.
+#
+$(DVI): $(BBL) $(TEX_MAIN) $(TEX_SRC)
+	latex $(TEX_MAIN)
+	latex $(TEX_MAIN)
 
-$(TEX_MAIN).ps: $(TEX_MAIN).dvi
-	dvips -Ppdf $(TEX_MAIN).dvi -o $(TEX_MAIN).ps
+#
+# Conversion among formats.
+#
+$(PDF): $(PS)
+	ps2pdf $(PS)
 
-$(TEX_MAIN).rtf: $(TEX_MAIN).tex
-	latex2rtf $(TEX_MAIN).tex
+$(PS): $(DVI)
+	dvips -Ppdf $(DVI) -o $(PS)
+
+$(RTF): $(TEX_MAIN)
+	latex2rtf $(TEX_MAIN)
 
