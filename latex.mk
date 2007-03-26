@@ -57,6 +57,11 @@ DVI_VIEWER ?=	xdvi
 PS_VIEWER ?=	gv
 PDF_VIEWER ?=	xpdf
 
+#
+# Options
+#
+DVIPS_PRINT ?=	-Ppdf
+DVIPS_OPTS ?=
 
 #
 # Rules to create the files we know about.
@@ -106,7 +111,7 @@ $(PDF): $(PS)
 	ps2pdf $(PS)
 
 $(PS): $(DVI)
-	dvips -Ppdf $(DVI) -o $(PS)
+	dvips $(DVIPS_PRINT) $(DVIPS_OPTS) $(DVI) -o $(PS)
 
 $(RTF): $(TEX_MAIN)
 	latex2rtf $(TEX_MAIN)
