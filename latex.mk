@@ -113,6 +113,6 @@ $(PDF): $(PS)
 $(PS): $(DVI)
 	dvips $(DVIPS_PRINT) $(DVIPS_OPTS) $(DVI) -o $(PS)
 
-$(RTF): $(TEX_MAIN)
+$(RTF): $(TEX_MAIN) $(TEX_SRC)
 	latex2rtf $(TEX_MAIN)
 
