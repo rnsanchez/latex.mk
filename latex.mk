@@ -100,7 +100,7 @@ $(BBL): $(BIB_SRC)
 # Otherwise, make will instead go to the $(BBL) rule above, without running
 # the commands in this one.
 #
-$(DVI): $(BBL) $(TEX_MAIN) $(TEX_SRC)
+$(DVI): $(BBL) $(TEX_MAIN) $(TEX_SRC) $(FIGURES)
 	latex $(TEX_MAIN)
 	latex $(TEX_MAIN)
 
@@ -113,6 +113,6 @@ $(PDF): $(PS)
 $(PS): $(DVI)
 	dvips $(DVIPS_PRINT) $(DVIPS_OPTS) $(DVI) -o $(PS)
 
-$(RTF): $(TEX_MAIN) $(TEX_SRC)
+$(RTF): $(TEX_MAIN) $(TEX_SRC) $(FIGURES)
 	latex2rtf $(TEX_MAIN)
 
