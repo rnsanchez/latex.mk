@@ -60,7 +60,9 @@ PDF_VIEWER ?=	xpdf
 #
 # Options
 #
-DVIPS_PRINT ?=	-Ppdf
+DEFAULT_PAPER =	letter
+PAPER ?=	$(DEFAULT_PAPER)
+DVIPS_PRINT ?=	-t $(PAPER) -Ppdf
 DVIPS_OPTS ?=
 
 #
