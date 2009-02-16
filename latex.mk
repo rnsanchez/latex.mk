@@ -34,7 +34,7 @@
 all: dvi
 
 clean:
-	rm -f *.aux *.toc *.lo[agft] *.bbl *.blg *.dvi *.out *.nav *.snm
+	rm -f *.aux *.toc *.lo[agft] *.bbl *.blg *.out *.nav *.snm
 
 #
 # If the user has a BibTeX database, we must track its dependencies.
