@@ -92,9 +92,9 @@ viewps: ps
 # If using BibTeX, and the database changed, we need the full run.
 #
 $(BBL): $(BIB_SRC)
-	latex $(TEX_MAIN)
-	bibtex ${TEX_MAIN:.tex=}
-	latex $(TEX_MAIN)
+	latex $(TEX_MAIN) && \
+	bibtex ${TEX_MAIN:.tex=} && \
+	latex $(TEX_MAIN) && \
 	latex $(TEX_MAIN)
 
 #
@@ -103,7 +103,7 @@ $(BBL): $(BIB_SRC)
 # the commands in this one.
 #
 $(DVI): $(BBL) $(TEX_MAIN) $(TEX_SRC) $(FIGURES)
-	latex $(TEX_MAIN)
+	latex $(TEX_MAIN) && \
 	latex $(TEX_MAIN)
 
 #
