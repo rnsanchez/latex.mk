@@ -5,6 +5,9 @@ latex.mk contains a set of BSD-make rules to simplify document generation using
 LaTeX.  The latex.mk file provides a set of basic rules, like PDF generation, so
 the actual Makefile becomes very simple.
 
+Important note: the rules in latex.mk do *NOT* work with GNU Make.  You need to
+use BSD make in order for them to work (pmake in most Linux environments).
+
 
 Using latex.mk
 ==============
