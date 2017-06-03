@@ -53,6 +53,19 @@ DVIPS_PRINT ?=	-t $(PAPER) -Ppdf
 DVIPS_OPTS ?=
 
 #
+# Help
+#
+help:
+	@echo "Targets:"
+	@echo "  * dvi     - process document into a DVI file"
+	@echo "  * pdf     - convert DVI to PDF"
+	@echo "  * ps      - convert DVI to PostScript"
+	@echo "  * rtf     - convert document to RTF (Rich-text Format)"
+	@echo "  * view    - displays DVI file with $(DVI_VIEWER)"
+	@echo "  * viewpdf - displays PDF with $(PDF_VIEWER)"
+	@echo "  * viewps  - displays PostScript with $(PS_VIEWER)"
+
+#
 # Rules to create the files we know about.
 #
 dvi: $(DVI)
